@@ -1,36 +1,35 @@
 package com.empresajr.fatec.entities;
 
-import com.empresajr.fatec.enums.Type;
+import com.empresajr.fatec.entities.enums.Type;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.Entity;
+import javax.persistence.Enumerated;
+import javax.persistence.EnumType;
+import javax.persistence.GenerationType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
+@Data
+@Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class Author extends Person implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Date publishDate;
+
+    @Enumerated(EnumType.STRING)
     private Type type;
-
-
-    public Author(String name, String email, String password, Long id, Date publishDate) {
-        super(name, email, password);
-        this.id = id;
-        this.publishDate = publishDate;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public Date getPublishDate() {
-        return publishDate;
-    }
-
-    public void setPublishDate(Date publishDate) {
-        this.publishDate = publishDate;
-    }
 
     @Override
     public boolean equals(Object o) {

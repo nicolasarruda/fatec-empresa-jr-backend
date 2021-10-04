@@ -1,4 +1,4 @@
-package com.empresajr.fatec.enums;
+package com.empresajr.fatec.entities.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
