@@ -5,12 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Enumerated;
-import javax.persistence.EnumType;
-import javax.persistence.GenerationType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -24,10 +19,16 @@ public class User extends Person implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    protected Long id;
 
     @Enumerated(EnumType.STRING)
     private Type type;
+
+    public User(Long id, String name, String email, String password, Type type) {
+        super(name, email, password);
+        this.id = id;
+        this.type = type;
+    }
 
     @Override
     public boolean equals(Object o) {
