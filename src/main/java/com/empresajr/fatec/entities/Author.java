@@ -27,11 +27,18 @@ public class Author extends Person implements Serializable {
     @Enumerated(EnumType.STRING)
     private Type type;
 
+    public Author(Long id, String name, String email, String password, Date publishDate, Type type) {
+        super(name, email, password);
+        this.id = id;
+        this.publishDate = publishDate;
+        this.type = type;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Author author = (Author) o;
+        User author = (User) o;
         return id.equals(author.id);
     }
 
