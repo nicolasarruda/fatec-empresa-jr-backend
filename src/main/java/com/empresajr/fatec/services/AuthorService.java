@@ -1,7 +1,6 @@
 package com.empresajr.fatec.services;
 
 import com.empresajr.fatec.entities.Author;
-import com.empresajr.fatec.entities.User;
 import com.empresajr.fatec.repositories.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

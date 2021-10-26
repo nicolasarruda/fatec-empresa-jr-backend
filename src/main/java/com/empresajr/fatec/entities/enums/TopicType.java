@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum Type {
+public enum TopicType {
 
     NEOTECH(1),
     ADS(2),

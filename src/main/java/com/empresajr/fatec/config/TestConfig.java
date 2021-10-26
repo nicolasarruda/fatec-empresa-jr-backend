@@ -3,7 +3,7 @@ package com.empresajr.fatec.config;
 import com.empresajr.fatec.entities.Author;
 import com.empresajr.fatec.entities.Post;
 import com.empresajr.fatec.entities.User;
-import com.empresajr.fatec.entities.enums.Type;
+import com.empresajr.fatec.entities.enums.TopicType;
 import com.empresajr.fatec.repositories.AuthorRepository;
 import com.empresajr.fatec.repositories.PostRepository;
 import com.empresajr.fatec.repositories.UserRepository;
@@ -34,19 +34,19 @@ public class TestConfig implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        User user1 = new User(null, "Marcos", "marcos@mail.com", "123456", Type.USER);
-        User user2 = new User(null, "Ana", "ana@mail.com", "123456", Type.USER);
+        User user1 = new User(null, "marcos@mail.com");
+        User user2 = new User(null, "ana@mail.com");
 
         Date date = Date.from(Instant.parse("2021-10-04T22:12:55Z"));
 
 
         Author author1 = new Author(null, "Maria", "maria@mail.com",
-                "123456", date, Type.AUTHOR);
+                "123456", date);
 
         Author author2 = new Author(null, "José", "jose@mail.com",
-                "123456", date, Type.AUTHOR);
+                "123456", date);
 
-        Post post1 = new Post("Senhor dos aneis: A sociedade do Anel", date, "Livro",
+        Post post1 = new Post(null,"Senhor dos aneis: A sociedade do Anel", date, TopicType.ADS,
                 "O Senhor dos Anéis (no original em inglês, The Lord of the Rings) é uma trilogia cinematográfica" +
                         " dirigida por Peter Jackson com base na obra-prima homónima de J. R. R. Tolkien." +
                         " Os três filmes foram rodados em simultâneo na Nova Zelândia, faturaram cerca de" +
@@ -54,7 +54,7 @@ public class TestConfig implements CommandLineRunner {
                         " e foram galardoados com 17 Oscars, entre os 30 para os quais foram nomeados e"   +
                         " é a franquia cinematográfica mais premiada da história", "");
 
-        Post post2 = new Post("Harry Potter e a Pedra Filosofal", date, "Livro", "Harry Potter"      +
+        Post post2 = new Post(null,"Harry Potter e a Pedra Filosofal", date, TopicType.SISTEMAS_EMBARCADOS, "Harry Potter"      +
                 " (Daniel Radcliffe) é um garoto órfão de dez anos que mora com seus desagradáveis tios, os Dursley,"       +
                 " em Surrey. Na véspera de seu aniversário de onze anos, coisas incomuns começam a acontecer, como ir"      +
                 " no zoológico com seu mimado primo Duda e descobrir que consegue falar com uma cobra e ainda fazer"        +

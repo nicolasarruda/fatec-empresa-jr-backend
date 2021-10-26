@@ -1,33 +1,35 @@
 package com.empresajr.fatec.entities;
 
-import com.empresajr.fatec.entities.enums.Type;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-@Data
+@Getter
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
-public class User extends Person implements Serializable {
+public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Long id;
+    private Long id;
 
-    @Enumerated(EnumType.STRING)
-    private Type type;
+    @NotEmpty
+    @Email
+    private String institutionalEmail;
 
-    public User(Long id, String name, String email, String password, Type type) {
-        super(name, email, password);
+    public User(Long id, String institutionalEmail) {
         this.id = id;
-        this.type = type;
+        this.institutionalEmail = institutionalEmail;
     }
 
     @Override
