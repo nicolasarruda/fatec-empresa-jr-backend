@@ -4,13 +4,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -26,14 +27,15 @@ public class Author implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty
+    @NotEmpty(message = "Campo obrigatório")
     private String name;
 
-    @Email
-    @NotEmpty
+    @Email(message = "Email inválido")
+    @Column(unique = true, nullable = false)
     private String email;
 
     @NotEmpty
+    @Size(min = 6, message = "A senha deve possuir no mínimo 6 caracteres")
     private String password;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")

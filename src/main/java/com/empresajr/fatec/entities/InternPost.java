@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 @Getter
 @Entity
@@ -52,4 +53,16 @@ public class InternPost implements Serializable {
         this.imgUrl = imgUrl;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        InternPost that = (InternPost) o;
+        return id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }
