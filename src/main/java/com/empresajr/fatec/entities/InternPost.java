@@ -13,11 +13,11 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
 
 @Getter
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
 public class InternPost implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -36,6 +36,14 @@ public class InternPost implements Serializable {
     @Column(length = 5000)
     private String description;
     private String imgUrl;
+
+    public InternPost(Long id, String title, Date moment, String description, String imgUrl) {
+        this.id = id;
+        this.title = title.replaceAll(" ", "-").toLowerCase();
+        this.moment = moment;
+        this.description = description;
+        this.imgUrl = imgUrl;
+    }
 
     public void setTitle(String title) {
         this.title = title;

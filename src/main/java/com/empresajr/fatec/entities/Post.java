@@ -18,7 +18,6 @@ import javax.validation.constraints.NotEmpty;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Locale;
 import java.util.Objects;
 
 @Getter
