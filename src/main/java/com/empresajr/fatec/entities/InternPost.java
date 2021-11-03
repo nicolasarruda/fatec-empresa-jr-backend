@@ -1,7 +1,6 @@
 package com.empresajr.fatec.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -13,7 +12,6 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Locale;
 import java.util.Objects;
 
 @Getter

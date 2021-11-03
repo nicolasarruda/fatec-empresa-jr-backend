@@ -41,22 +41,27 @@ public class TestConfig implements CommandLineRunner {
 
         Date date = Date.from(Instant.parse("2021-10-04T22:12:55Z"));
 
-
         Author author1 = new Author(null, "Maria", "maria@mail.com",
-                "123456", date);
+                "123456");
 
         Author author2 = new Author(null, "José", "jose@mail.com",
-                "123456", date);
+                "123456");
 
-        Post post1 = new Post(null,"Senhor dos aneis: A sociedade do Anel", date, TopicType.NEOTECH,
+        authorRepository.saveAll(Arrays.asList(author1, author2));
+
+        Topic topic1 = new Topic(null, "ADS");
+        Topic topic2 = new Topic(null, "Sistemas Embarcados");
+        Topic topic3 = new Topic(null, "Eventos");
+
+        Post post1 = new Post(null,"Senhor dos aneis: A sociedade do Anel", date, topic1,
                 "O Senhor dos Anéis (no original em inglês, The Lord of the Rings) é uma trilogia cinematográfica" +
                         " dirigida por Peter Jackson com base na obra-prima homónima de J. R. R. Tolkien." +
                         " Os três filmes foram rodados em simultâneo na Nova Zelândia, faturaram cerca de" +
                         " 3 bilhões (US$ 2.925.155.189) de dólares de receitas conjuntas de bilheteira"    +
                         " e foram galardoados com 17 Oscars, entre os 30 para os quais foram nomeados e"   +
-                        " é a franquia cinematográfica mais premiada da história", "");
+                        " é a franquia cinematográfica mais premiada da história", "", author1);
 
-        Post post2 = new Post(null,"Harry Potter e a Pedra Filosofal", date, TopicType.ADS, "Harry Potter"      +
+        Post post2 = new Post(null,"Harry Potter e a Pedra Filosofal", date, topic2, "Harry Potter"      +
                 " (Daniel Radcliffe) é um garoto órfão de dez anos que mora com seus desagradáveis tios, os Dursley,"       +
                 " em Surrey. Na véspera de seu aniversário de onze anos, coisas incomuns começam a acontecer, como ir"      +
                 " no zoológico com seu mimado primo Duda e descobrir que consegue falar com uma cobra e ainda fazer"        +
@@ -73,7 +78,7 @@ public class TestConfig implements CommandLineRunner {
                 " das Trevas, Lorde Voldemort, foi quem assassinou Lilian e Thiago Potter e na tentativa de matar Harry,"   +
                 " algo aconteceu o feitiço de Voldemort ricocheteou nele mesmo o fazendo perder seus poderes e desaparecer" +
                 ", deixando apenas uma cicatriz em forma de raio na testa de Harry. Após terminar de comprar o material,"   +
-                " Harry embarca no Expresso de Hogwarts através da Plataforma 9 ¾ na Estação de King's Cross.", "");
+                " Harry embarca no Expresso de Hogwarts através da Plataforma 9 ¾ na Estação de King's Cross.", "", author2);
 
         InternPost internpost1 = new InternPost(null,"Senhor dos aneis: A sociedade do Anel", date,
                 "O Senhor dos Anéis (no original em inglês, The Lord of the Rings) é uma trilogia cinematográfica" +
@@ -101,9 +106,8 @@ public class TestConfig implements CommandLineRunner {
                 " algo aconteceu o feitiço de Voldemort ricocheteou nele mesmo o fazendo perder seus poderes e desaparecer" +
                 ", deixando apenas uma cicatriz em forma de raio na testa de Harry. Após terminar de comprar o material,"   +
                 " Harry embarca no Expresso de Hogwarts através da Plataforma 9 ¾ na Estação de King's Cross.", "");
-
+        
         userRepository.saveAll(Arrays.asList(user1, user2));
-        authorRepository.saveAll(Arrays.asList(author1, author2));
         postRepository.saveAll(Arrays.asList(post1, post2));
         internPostRepository.saveAll(Arrays.asList(internpost1, internpost2));
 
