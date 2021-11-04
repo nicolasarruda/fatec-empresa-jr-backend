@@ -1,33 +1,41 @@
 package com.empresajr.fatec.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Id;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GenerationType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.MapsId;
+import javax.persistence.JoinColumn;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotEmpty;
 import javax.persistence.OneToOne;
-import javax.validation.constraints.NotNull;
+import javax.persistence.Table;
+
+
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 
-@Entity
 @Getter
+@Entity
 @NoArgsConstructor
-public class Topic implements Serializable {
-    private static final long serialVersionUID = 1L;
+@Table(name = "tb_topic")
+public class Topic {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
+    @NotEmpty
     private String name;
 
-    @OneToOne
-    @MapsId
+    @OneToOne(mappedBy = "topic", cascade = CascadeType.ALL)
     private Post post;
 
     public Topic(Long id, String name) {
@@ -39,8 +47,13 @@ public class Topic implements Serializable {
         this.name = name;
     }
 
-    public void setPosts(Post post) {
+    public void setPost(Post post){
         this.post = post;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
     @Override
@@ -49,10 +62,5 @@ public class Topic implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         Topic topic = (Topic) o;
         return id.equals(topic.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
     }
 }

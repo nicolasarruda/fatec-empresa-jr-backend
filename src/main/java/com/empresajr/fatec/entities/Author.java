@@ -1,6 +1,5 @@
 package com.empresajr.fatec.entities;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -12,7 +11,9 @@ import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.Size;
+
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ import java.util.Objects;
 @Getter
 @Entity
 @NoArgsConstructor
+@Table(name = "tb_author")
 public class Author implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -40,7 +42,7 @@ public class Author implements Serializable {
     @Size(min = 6, message = "A senha deve possuir no mínimo 6 caracteres")
     private String password;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "author")
     private List<Post> posts = new ArrayList<>();
 
     public Author(Long id, String name, String email,String password) {

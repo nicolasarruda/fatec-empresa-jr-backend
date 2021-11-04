@@ -2,10 +2,7 @@ package com.empresajr.fatec.config;
 
 import com.empresajr.fatec.entities.*;
 import com.empresajr.fatec.entities.enums.TopicType;
-import com.empresajr.fatec.repositories.AuthorRepository;
-import com.empresajr.fatec.repositories.InternPostRepository;
-import com.empresajr.fatec.repositories.PostRepository;
-import com.empresajr.fatec.repositories.UserRepository;
+import com.empresajr.fatec.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -31,6 +28,9 @@ public class TestConfig implements CommandLineRunner {
     private PostRepository postRepository;
 
     @Autowired
+    private TopicRepository topicRepository;
+
+    @Autowired
     private InternPostRepository internPostRepository;
 
     @Override
@@ -53,7 +53,9 @@ public class TestConfig implements CommandLineRunner {
         Topic topic2 = new Topic(null, "Sistemas Embarcados");
         Topic topic3 = new Topic(null, "Eventos");
 
-        Post post1 = new Post(null,"Senhor dos aneis: A sociedade do Anel", date, topic1,
+        topicRepository.saveAll(Arrays.asList(topic1, topic2, topic3));
+
+        Post post1 = new Post(null,"Senhor dos aneis: A sociedade do Anel", topic1, date,
                 "O Senhor dos Anéis (no original em inglês, The Lord of the Rings) é uma trilogia cinematográfica" +
                         " dirigida por Peter Jackson com base na obra-prima homónima de J. R. R. Tolkien." +
                         " Os três filmes foram rodados em simultâneo na Nova Zelândia, faturaram cerca de" +
@@ -61,7 +63,7 @@ public class TestConfig implements CommandLineRunner {
                         " e foram galardoados com 17 Oscars, entre os 30 para os quais foram nomeados e"   +
                         " é a franquia cinematográfica mais premiada da história", "", author1);
 
-        Post post2 = new Post(null,"Harry Potter e a Pedra Filosofal", date, topic2, "Harry Potter"      +
+        Post post2 = new Post(null,"Harry Potter e a Pedra Filosofal", topic2, date, "Harry Potter"      +
                 " (Daniel Radcliffe) é um garoto órfão de dez anos que mora com seus desagradáveis tios, os Dursley,"       +
                 " em Surrey. Na véspera de seu aniversário de onze anos, coisas incomuns começam a acontecer, como ir"      +
                 " no zoológico com seu mimado primo Duda e descobrir que consegue falar com uma cobra e ainda fazer"        +
@@ -79,6 +81,16 @@ public class TestConfig implements CommandLineRunner {
                 " algo aconteceu o feitiço de Voldemort ricocheteou nele mesmo o fazendo perder seus poderes e desaparecer" +
                 ", deixando apenas uma cicatriz em forma de raio na testa de Harry. Após terminar de comprar o material,"   +
                 " Harry embarca no Expresso de Hogwarts através da Plataforma 9 ¾ na Estação de King's Cross.", "", author2);
+
+        topic1.setPost(post1);
+        topic2.setPost(post2);
+
+        topicRepository.saveAll(Arrays.asList(topic1, topic2));
+
+        author1.getPosts().add(post1);
+        author2.getPosts().add(post2);
+
+        authorRepository.saveAll(Arrays.asList(author1, author2));
 
         InternPost internpost1 = new InternPost(null,"Senhor dos aneis: A sociedade do Anel", date,
                 "O Senhor dos Anéis (no original em inglês, The Lord of the Rings) é uma trilogia cinematográfica" +
@@ -106,9 +118,8 @@ public class TestConfig implements CommandLineRunner {
                 " algo aconteceu o feitiço de Voldemort ricocheteou nele mesmo o fazendo perder seus poderes e desaparecer" +
                 ", deixando apenas uma cicatriz em forma de raio na testa de Harry. Após terminar de comprar o material,"   +
                 " Harry embarca no Expresso de Hogwarts através da Plataforma 9 ¾ na Estação de King's Cross.", "");
-        
+
         userRepository.saveAll(Arrays.asList(user1, user2));
-        postRepository.saveAll(Arrays.asList(post1, post2));
         internPostRepository.saveAll(Arrays.asList(internpost1, internpost2));
 
     }

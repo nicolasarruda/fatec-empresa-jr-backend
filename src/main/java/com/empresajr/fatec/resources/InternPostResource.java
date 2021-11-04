@@ -21,6 +21,7 @@ public class InternPostResource {
         return ResponseEntity.ok().body(list);
     }
 
+    /*
     @GetMapping(value = "/find-titles")
     @ResponseBody
     public ResponseEntity<InternPost> findPostByTitle(@RequestParam(value = "title") String title) {
@@ -32,5 +33,7 @@ public class InternPostResource {
 
         return ResponseEntity.ok().body(internPost);
     }
+    */
+
 }
 

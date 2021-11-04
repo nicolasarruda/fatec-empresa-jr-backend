@@ -9,7 +9,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
@@ -17,6 +19,7 @@ import java.util.Objects;
 @Getter
 @Entity
 @NoArgsConstructor
+@Table(name = "tb_internPost")
 public class InternPost implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -37,7 +40,7 @@ public class InternPost implements Serializable {
 
     public InternPost(Long id, String title, Date moment, String description, String imgUrl) {
         this.id = id;
-        this.title = title.replaceAll(" ", "-").toLowerCase();
+        this.title = title;
         this.moment = moment;
         this.description = description;
         this.imgUrl = imgUrl;
