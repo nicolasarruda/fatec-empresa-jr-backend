@@ -1,27 +1,24 @@
 package com.empresajr.fatec.entities;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.GenerationType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.NotEmpty;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-
+import javax.validation.constraints.NotEmpty;
 import java.util.Objects;
 
 @Getter
 @Entity
 @NoArgsConstructor
-@Table(name = "tb_topic")
-public class Topic {
+@Table(name = "tb_intern_topic")
+public class InternTopic {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,10 +27,10 @@ public class Topic {
     @NotEmpty
     private String name;
 
-    @OneToOne(mappedBy = "topic", cascade = CascadeType.ALL)
-    private Post post;
+    @OneToOne(mappedBy = "internTopic", cascade = CascadeType.ALL)
+    private InternPost internPost;
 
-    public Topic(Long id, String name) {
+    public InternTopic(Long id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -42,8 +39,8 @@ public class Topic {
         this.name = name;
     }
 
-    public void setPost(Post post){
-        this.post = post;
+    public void setInternPost(InternPost internPost){
+        this.internPost = internPost;
     }
 
     @Override
@@ -55,7 +52,7 @@ public class Topic {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Topic topic = (Topic) o;
+        InternTopic topic = (InternTopic) o;
         return id.equals(topic.id);
     }
 }

@@ -45,6 +45,9 @@ public class Author implements Serializable {
     @OneToMany(mappedBy = "author")
     private List<Post> posts = new ArrayList<>();
 
+    @OneToMany(mappedBy = "author")
+    private List<InternPost> internPosts = new ArrayList<>();
+
     public Author(Long id, String name, String email,String password) {
         this.id = id;
         this.name = name;

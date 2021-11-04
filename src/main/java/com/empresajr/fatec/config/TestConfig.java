@@ -33,6 +33,9 @@ public class TestConfig implements CommandLineRunner {
     @Autowired
     private InternPostRepository internPostRepository;
 
+    @Autowired
+    private InternTopicRepository internTopicRepository;
+
     @Override
     public void run(String... args) throws Exception {
 
@@ -92,15 +95,21 @@ public class TestConfig implements CommandLineRunner {
 
         authorRepository.saveAll(Arrays.asList(author1, author2));
 
-        InternPost internpost1 = new InternPost(null,"Senhor dos aneis: A sociedade do Anel", date,
+        InternTopic internTopic1 = new InternTopic(null, "Back-end java");
+        InternTopic internTopic2 = new InternTopic(null, "Front-end react");
+        InternTopic internTopic3 = new InternTopic(null, "DBA MongoDB");
+
+        internTopicRepository.saveAll(Arrays.asList(internTopic1, internTopic2, internTopic3));
+
+        InternPost internPost1 = new InternPost(null,"Senhor dos aneis: A sociedade do Anel",internTopic1, date,
                 "O Senhor dos Anéis (no original em inglês, The Lord of the Rings) é uma trilogia cinematográfica" +
                         " dirigida por Peter Jackson com base na obra-prima homónima de J. R. R. Tolkien." +
                         " Os três filmes foram rodados em simultâneo na Nova Zelândia, faturaram cerca de" +
                         " 3 bilhões (US$ 2.925.155.189) de dólares de receitas conjuntas de bilheteira"    +
                         " e foram galardoados com 17 Oscars, entre os 30 para os quais foram nomeados e"   +
-                        " é a franquia cinematográfica mais premiada da história", "");
+                        " é a franquia cinematográfica mais premiada da história", "", author1);
 
-        InternPost internpost2 = new InternPost(null,"Harry Potter e a Pedra Filosofal", date, "Harry Potter"      +
+        InternPost internPost2 = new InternPost(null,"Harry Potter e a Pedra Filosofal",internTopic2, date, "Harry Potter"      +
                 " (Daniel Radcliffe) é um garoto órfão de dez anos que mora com seus desagradáveis tios, os Dursley,"       +
                 " em Surrey. Na véspera de seu aniversário de onze anos, coisas incomuns começam a acontecer, como ir"      +
                 " no zoológico com seu mimado primo Duda e descobrir que consegue falar com uma cobra e ainda fazer"        +
@@ -117,10 +126,19 @@ public class TestConfig implements CommandLineRunner {
                 " das Trevas, Lorde Voldemort, foi quem assassinou Lilian e Thiago Potter e na tentativa de matar Harry,"   +
                 " algo aconteceu o feitiço de Voldemort ricocheteou nele mesmo o fazendo perder seus poderes e desaparecer" +
                 ", deixando apenas uma cicatriz em forma de raio na testa de Harry. Após terminar de comprar o material,"   +
-                " Harry embarca no Expresso de Hogwarts através da Plataforma 9 ¾ na Estação de King's Cross.", "");
+                " Harry embarca no Expresso de Hogwarts através da Plataforma 9 ¾ na Estação de King's Cross.", "", author2);
+
+        internTopic1.setInternPost(internPost1);
+        internTopic2.setInternPost(internPost2);
+        internTopicRepository.saveAll(Arrays.asList(internTopic1, internTopic2, internTopic3));
+
+        author1.getInternPosts().add(internPost1);
+        author2.getInternPosts().add(internPost2);
+
+        authorRepository.saveAll(Arrays.asList(author1, author2));
 
         userRepository.saveAll(Arrays.asList(user1, user2));
-        internPostRepository.saveAll(Arrays.asList(internpost1, internpost2));
+
 
     }
 }

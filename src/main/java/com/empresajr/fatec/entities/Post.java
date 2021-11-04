@@ -49,6 +49,7 @@ public class Post implements Serializable {
     @MapsId
     private Topic topic;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "author_id")
     private Author author;

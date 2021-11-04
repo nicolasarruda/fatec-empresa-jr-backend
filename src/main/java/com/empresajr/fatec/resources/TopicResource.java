@@ -24,8 +24,8 @@ public class TopicResource {
     @GetMapping(value = "/{id}")
     @ResponseBody
     public ResponseEntity<Topic> findTopic(@PathVariable Long id) {
-        Topic topic1 = service.findTopic(id);
-        return ResponseEntity.ok().body(topic1);
+        Topic topic = service.findTopic(id);
+        return ResponseEntity.ok().body(topic);
     }
 }
 
