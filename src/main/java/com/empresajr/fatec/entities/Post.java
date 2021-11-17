@@ -1,6 +1,5 @@
 package com.empresajr.fatec.entities;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,12 +11,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.JoinColumn;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotEmpty;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
-
+import javax.validation.constraints.NotEmpty;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.Instant;
 import java.util.Objects;
 
 @Getter
@@ -34,8 +34,11 @@ public class Post implements Serializable {
     @NotEmpty
     private String title;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
-    private Date publishDate;
+    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    private Instant momentCreated;
+
+    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    private Instant momentUpdated;
 
     @Column(columnDefinition = "TEXT")
     private String content;
@@ -52,12 +55,10 @@ public class Post implements Serializable {
     @JoinColumn(name = "author_id")
     private Author author;
 
-    public Post(Long id, String title, Topic topic, String topicName, Date publishDate,String content, String imgUrl, Author author) {
+    public Post(Long id, String title,Topic topic, String content, String imgUrl, Author author) {
         this.id = id;
         this.title = title;
         this.topic = topic;
-        this.topic.setName(topicName);
-        this.publishDate = publishDate;
         this.content = content;
         this.imgUrl = imgUrl;
         this.author = author;
@@ -71,10 +72,6 @@ public class Post implements Serializable {
         this.topic = topic;
     }
 
-    public void setPublishDate(Date publishDate) {
-        this.publishDate = publishDate;
-    }
-
     public void setContent(String content) {
         this.content = content;
     }
@@ -85,6 +82,16 @@ public class Post implements Serializable {
 
     public void setAuthor(Author author){
         this.author = author;
+    }
+
+    @PrePersist
+    public void prePersist() {
+        momentCreated = Instant.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        momentUpdated = Instant.now();
     }
 
     @Override

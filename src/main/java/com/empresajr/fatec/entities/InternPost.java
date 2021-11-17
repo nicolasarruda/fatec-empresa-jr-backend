@@ -12,11 +12,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.Instant;
 import java.util.Objects;
 
 @Getter
@@ -33,8 +35,11 @@ public class InternPost implements Serializable {
     @NotEmpty
     private String title;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
-    private Date moment;
+    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    private Instant momentCreated;
+
+    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    private Instant momentUpdated;
 
     @JsonIgnore
     @ManyToOne
@@ -50,11 +55,10 @@ public class InternPost implements Serializable {
     private String description;
     private String imgUrl;
 
-    public InternPost(Long id, String title,InternTopic internTopic, Date moment, String description, String imgUrl, Author author) {
+    public InternPost(Long id, String title,InternTopic internTopic, String description, String imgUrl, Author author) {
         this.id = id;
         this.title = title;
         this.internTopic = internTopic;
-        this.moment = moment;
         this.description = description;
         this.imgUrl = imgUrl;
         this.author = author;
@@ -68,8 +72,14 @@ public class InternPost implements Serializable {
         this.internTopic = internTopic;
     }
 
-    public void setMoment(Date moment) {
-        this.moment = moment;
+    @PrePersist
+    public void prePersist(){
+        momentCreated = Instant.now();
+    }
+
+    @PreUpdate
+    public void preUpdate(){
+        momentUpdated = Instant.now();
     }
 
     public void setDescription(String description) {
