@@ -3,15 +3,16 @@ package com.empresajr.fatec.entities;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -27,8 +28,8 @@ public class InternTopic {
     @NotEmpty
     private String name;
 
-    @OneToOne(mappedBy = "internTopic", cascade = CascadeType.ALL)
-    private InternPost internPost;
+    @OneToMany(mappedBy = "internTopic")
+    private List<InternPost> internPosts = new ArrayList<>();
 
     public InternTopic(Long id, String name) {
         this.id = id;
@@ -37,10 +38,6 @@ public class InternTopic {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public void setInternPost(InternPost internPost){
-        this.internPost = internPost;
     }
 
     @Override

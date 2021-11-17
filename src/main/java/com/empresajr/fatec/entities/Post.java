@@ -12,9 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.JoinColumn;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 import javax.validation.constraints.NotEmpty;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -39,14 +37,14 @@ public class Post implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
     private Date publishDate;
 
-    @Column(length = 5000)
+    @Column(columnDefinition = "TEXT")
     private String content;
 
     private String imgUrl;
 
     @JsonIgnore
-    @OneToOne
-    @MapsId
+    @ManyToOne
+    @JoinColumn(name = "topic_id")
     private Topic topic;
 
     @JsonIgnore
@@ -54,10 +52,11 @@ public class Post implements Serializable {
     @JoinColumn(name = "author_id")
     private Author author;
 
-    public Post(Long id, String title,Topic topic, Date publishDate,String content, String imgUrl, Author author) {
+    public Post(Long id, String title, Topic topic, String topicName, Date publishDate,String content, String imgUrl, Author author) {
         this.id = id;
         this.title = title;
         this.topic = topic;
+        this.topic.setName(topicName);
         this.publishDate = publishDate;
         this.content = content;
         this.imgUrl = imgUrl;

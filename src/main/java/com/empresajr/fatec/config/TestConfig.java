@@ -58,7 +58,7 @@ public class TestConfig implements CommandLineRunner {
 
         topicRepository.saveAll(Arrays.asList(topic1, topic2, topic3));
 
-        Post post1 = new Post(null,"Senhor dos aneis: A sociedade do Anel", topic1, date,
+        Post post1 = new Post(null,"Senhor dos aneis: A sociedade do Anel", topic1, topic1.getName(), date,
                 "O Senhor dos Anéis (no original em inglês, The Lord of the Rings) é uma trilogia cinematográfica" +
                         " dirigida por Peter Jackson com base na obra-prima homónima de J. R. R. Tolkien." +
                         " Os três filmes foram rodados em simultâneo na Nova Zelândia, faturaram cerca de" +
@@ -66,7 +66,7 @@ public class TestConfig implements CommandLineRunner {
                         " e foram galardoados com 17 Oscars, entre os 30 para os quais foram nomeados e"   +
                         " é a franquia cinematográfica mais premiada da história", "", author1);
 
-        Post post2 = new Post(null,"Harry Potter e a Pedra Filosofal", topic2, date, "Harry Potter"      +
+        Post post2 = new Post(null,"Harry Potter e a Pedra Filosofal", topic1, topic1.getName(), date, "Harry Potter"      +
                 " (Daniel Radcliffe) é um garoto órfão de dez anos que mora com seus desagradáveis tios, os Dursley,"       +
                 " em Surrey. Na véspera de seu aniversário de onze anos, coisas incomuns começam a acontecer, como ir"      +
                 " no zoológico com seu mimado primo Duda e descobrir que consegue falar com uma cobra e ainda fazer"        +
@@ -85,10 +85,9 @@ public class TestConfig implements CommandLineRunner {
                 ", deixando apenas uma cicatriz em forma de raio na testa de Harry. Após terminar de comprar o material,"   +
                 " Harry embarca no Expresso de Hogwarts através da Plataforma 9 ¾ na Estação de King's Cross.", "", author2);
 
-        topic1.setPost(post1);
-        topic2.setPost(post2);
+        postRepository.saveAll(Arrays.asList(post1,post2));
 
-        topicRepository.saveAll(Arrays.asList(topic1, topic2));
+        topicRepository.saveAll(Arrays.asList(topic1, topic2, topic3));
 
         author1.getPosts().add(post1);
         author2.getPosts().add(post2);
@@ -109,7 +108,7 @@ public class TestConfig implements CommandLineRunner {
                         " e foram galardoados com 17 Oscars, entre os 30 para os quais foram nomeados e"   +
                         " é a franquia cinematográfica mais premiada da história", "", author1);
 
-        InternPost internPost2 = new InternPost(null,"Harry Potter e a Pedra Filosofal",internTopic2, date, "Harry Potter"      +
+        InternPost internPost2 = new InternPost(null,"Harry Potter e a Pedra Filosofal",internTopic1, date, "Harry Potter"      +
                 " (Daniel Radcliffe) é um garoto órfão de dez anos que mora com seus desagradáveis tios, os Dursley,"       +
                 " em Surrey. Na véspera de seu aniversário de onze anos, coisas incomuns começam a acontecer, como ir"      +
                 " no zoológico com seu mimado primo Duda e descobrir que consegue falar com uma cobra e ainda fazer"        +
@@ -128,8 +127,8 @@ public class TestConfig implements CommandLineRunner {
                 ", deixando apenas uma cicatriz em forma de raio na testa de Harry. Após terminar de comprar o material,"   +
                 " Harry embarca no Expresso de Hogwarts através da Plataforma 9 ¾ na Estação de King's Cross.", "", author2);
 
-        internTopic1.setInternPost(internPost1);
-        internTopic2.setInternPost(internPost2);
+        internPostRepository.saveAll(Arrays.asList(internPost1, internPost2));
+
         internTopicRepository.saveAll(Arrays.asList(internTopic1, internTopic2, internTopic3));
 
         author1.getInternPosts().add(internPost1);

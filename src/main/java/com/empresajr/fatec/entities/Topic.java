@@ -1,20 +1,19 @@
 package com.empresajr.fatec.entities;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GenerationType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotEmpty;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -30,8 +29,8 @@ public class Topic {
     @NotEmpty
     private String name;
 
-    @OneToOne(mappedBy = "topic", cascade = CascadeType.ALL)
-    private Post post;
+    @OneToMany(mappedBy = "topic")
+    private List<Post> posts = new ArrayList<>();
 
     public Topic(Long id, String name) {
         this.id = id;
@@ -40,10 +39,6 @@ public class Topic {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public void setPost(Post post){
-        this.post = post;
     }
 
     @Override

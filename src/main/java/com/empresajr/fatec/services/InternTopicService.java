@@ -23,5 +23,4 @@ public class InternTopicService {
         Optional<InternTopic> obj = repository.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException("Tópico não encontrado! Tópico: ", "Erro"));
     }
-
 }

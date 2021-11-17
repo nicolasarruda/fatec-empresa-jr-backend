@@ -22,11 +22,20 @@ public class PostService {
         return repository.findAll();
     }
 
-/*
-    public List<Post> findPostByTitleAndTopic(String title, Topic topic){
-        return repository.findPostByTitleAndTopic(title, topic);
+    public Post findById(Long id){
+        Optional<Post> obj = repository.findById(id);
+        return obj.get();
     }
 
- */
+
+    /*
+    public List<Post> findByTitleAndTopic(String title, String topic){
+        return repository.findByTitleIgnoreCaseOrTopicIgnoreCase(title, topic);
+    }
+
+     */
+
+
+
 
 }

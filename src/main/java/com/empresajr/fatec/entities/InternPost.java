@@ -12,8 +12,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
@@ -33,15 +31,14 @@ public class InternPost implements Serializable {
     private Long id;
 
     @NotEmpty
-    @GeneratedValue(generator = "title")
     private String title;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
     private Date moment;
 
     @JsonIgnore
-    @OneToOne
-    @MapsId
+    @ManyToOne
+    @JoinColumn(name = "intern_topic_id")
     private InternTopic internTopic;
 
     @JsonIgnore
@@ -49,7 +46,7 @@ public class InternPost implements Serializable {
     @JoinColumn(name = "author_id")
     private Author author;
 
-    @Column(length = 5000)
+    @Column(columnDefinition = "TEXT")
     private String description;
     private String imgUrl;
 
