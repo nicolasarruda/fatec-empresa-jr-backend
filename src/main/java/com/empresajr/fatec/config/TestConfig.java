@@ -44,11 +44,9 @@ public class TestConfig implements CommandLineRunner {
 
         Date date = Date.from(Instant.parse("2021-10-04T22:12:55Z"));
 
-        Author author1 = new Author(null, "Maria", "maria@mail.com",
-                "123456");
+        Author author1 = new Author(null, "Maria", "maria@mail.com");
 
-        Author author2 = new Author(null, "José", "jose@mail.com",
-                "123456");
+        Author author2 = new Author(null, "José", "jose@mail.com");
 
         authorRepository.saveAll(Arrays.asList(author1, author2));
 

@@ -38,21 +38,16 @@ public class Author implements Serializable {
     @Column(unique = true, nullable = false)
     private String email;
 
-    @NotEmpty
-    @Size(min = 6, message = "A senha deve possuir no mínimo 6 caracteres")
-    private String password;
-
     @OneToMany(mappedBy = "author")
     private List<Post> posts = new ArrayList<>();
 
     @OneToMany(mappedBy = "author")
     private List<InternPost> internPosts = new ArrayList<>();
 
-    public Author(Long id, String name, String email,String password) {
+    public Author(Long id, String name, String email) {
         this.id = id;
         this.name = name;
         this.email = email;
-        this.password = password;
     }
 
     public void setName(String name) {
@@ -61,10 +56,6 @@ public class Author implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     @Override

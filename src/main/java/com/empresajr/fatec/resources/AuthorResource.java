@@ -1,14 +1,26 @@
 package com.empresajr.fatec.resources;
 
+import com.empresajr.fatec.dto.AuthorDTO;
+import com.empresajr.fatec.dto.AuthorNameAndEmailDTO;
 import com.empresajr.fatec.entities.Author;
 import com.empresajr.fatec.services.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -19,14 +31,57 @@ public class AuthorResource {
     private AuthorService service;
 
     @GetMapping
-    public ResponseEntity<List<Author>> findAll(){
-        List<Author> list = service.findAll();
+    public ResponseEntity<List<AuthorNameAndEmailDTO>> findAll(){
+        List<AuthorNameAndEmailDTO> list = service.findAll();
         return ResponseEntity.ok().body(list);
     }
 
+    @GetMapping(value = "/pages")
+    public ResponseEntity<Page<AuthorNameAndEmailDTO>> findAllPaged(
+            @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @RequestParam(value = "linesPerPage", defaultValue = "6") Integer linesPerPage,
+            @RequestParam(value = "direction", defaultValue = "ASC") String direction,
+            @RequestParam(value = "orderBy", defaultValue = "name") String orderBy) {
+        PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+        Page<AuthorNameAndEmailDTO> list = service.findAllPaged(pageRequest);
+        return ResponseEntity.ok().body(list);
+    }
+
+
+
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Author> findById(@PathVariable Long id){
-        Author author = service.findById(id);
-        return ResponseEntity.ok().body(author);
+    public ResponseEntity<AuthorNameAndEmailDTO> findById(@PathVariable Long id){
+        AuthorNameAndEmailDTO dto = service.findById(id);
+        return ResponseEntity.ok().body(dto);
+    }
+
+    /*
+    @GetMapping(value = "/filter")
+    public ResponseEntity<AuthorNameAndEmailDTO> findByEmailOrName(
+            @RequestParam(value = "name", defaultValue = "") String name,
+            @RequestParam(value = "email", defaultValue = "") String email){
+        AuthorNameAndEmailDTO dto = service.findByEmailOrName(name, email);
+        return ResponseEntity.ok().body(dto);
+    }
+     */
+
+    @PostMapping
+    public ResponseEntity<AuthorDTO> insert(@RequestBody AuthorDTO dto){
+        dto = service.insert(dto);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("{id}")
+                .buildAndExpand(dto.getId()).toUri();
+        return ResponseEntity.created(uri).body(dto);
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<AuthorDTO> insert(@PathVariable Long id, @RequestBody AuthorDTO dto){
+        dto = service.update(id, dto);
+        return ResponseEntity.ok().body(dto);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> insert(@PathVariable Long id){
+        service.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
