@@ -1,11 +1,15 @@
 package com.empresajr.fatec.services;
 
-import com.empresajr.fatec.dto.AuthorDTO;
-import com.empresajr.fatec.dto.AuthorNameAndEmailDTO;
+import com.empresajr.fatec.dto.author.response.AuthorNameAndEmailDTO;
+import com.empresajr.fatec.dto.post.response.PostWithoutAuthorNameDTO;
 import com.empresajr.fatec.entities.Author;
+import com.empresajr.fatec.entities.Post;
 import com.empresajr.fatec.repositories.AuthorRepository;
+import com.empresajr.fatec.repositories.PostRepository;
+import com.empresajr.fatec.services.exceptions.DatabaseException;
 import com.empresajr.fatec.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,23 +27,26 @@ public class AuthorService {
     @Autowired
     private AuthorRepository repository;
 
+    @Autowired
+    private PostRepository postRepository;
+
     @Transactional(readOnly = true)
     public Page<AuthorNameAndEmailDTO> findAllPaged(PageRequest pageRequest){
         Page<Author> list = repository.findAll(pageRequest);
-        return list.map(x -> new AuthorNameAndEmailDTO(x));
+        return list.map(x -> new AuthorNameAndEmailDTO(x, x.getPosts()));
     }
 
     @Transactional(readOnly = true)
     public List<AuthorNameAndEmailDTO> findAll(){
         List<Author> list = repository.findAll();
-        return list.stream().map(x -> new AuthorNameAndEmailDTO(x)).collect(Collectors.toList());
+        return list.stream().map(x -> new AuthorNameAndEmailDTO(x, x.getPosts())).collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
     public AuthorNameAndEmailDTO findById(Long id){
         Optional<Author> obj = repository.findById(id);
         Author entity = obj.orElseThrow(() -> new ResourceNotFoundException("Recurso não encontrado"));
-        return new AuthorNameAndEmailDTO(entity);
+        return new AuthorNameAndEmailDTO(entity, entity.getPosts());
     }
 
     /*
@@ -53,20 +60,20 @@ public class AuthorService {
      */
 
     @Transactional
-    public AuthorDTO insert(AuthorDTO dto){
+    public AuthorNameAndEmailDTO insert(AuthorNameAndEmailDTO dto){
         Author entity = new Author();
         copyToDto(dto, entity);
         entity = repository.save(entity);
-        return new AuthorDTO(entity);
+        return new AuthorNameAndEmailDTO(entity);
     }
 
     @Transactional
-    public AuthorDTO update(Long id,AuthorDTO dto){
+    public AuthorNameAndEmailDTO update(Long id,AuthorNameAndEmailDTO dto){
         try {
             Author entity = repository.getOne(id);
             copyToDto(dto, entity);
             entity = repository.save(entity);
-            return new AuthorDTO(entity);
+            return new AuthorNameAndEmailDTO(entity);
         }
         catch (EntityNotFoundException e){
             throw new ResourceNotFoundException("Id não encontrado" + id);
@@ -80,10 +87,18 @@ public class AuthorService {
         catch (EmptyResultDataAccessException e){
             throw new ResourceNotFoundException("Id não encontrado" + id);
         }
+        catch (DataIntegrityViolationException e){
+            throw new DatabaseException("Violação de integridade no banco de dados");
+        }
     }
 
-    private void copyToDto(AuthorDTO dto, Author entity) {
+    private void copyToDto(AuthorNameAndEmailDTO dto, Author entity) {
         entity.setName(dto.getName());
         entity.setEmail(dto.getEmail());
+
+        for(PostWithoutAuthorNameDTO postDto : dto.getPosts()){
+            Post post = postRepository.getOne(postDto.getId());
+            entity.getPosts().add(post);
+        }
     }
 }

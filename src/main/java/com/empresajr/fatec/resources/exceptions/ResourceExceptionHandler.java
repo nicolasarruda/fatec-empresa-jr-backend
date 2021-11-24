@@ -19,7 +19,7 @@ public class ResourceExceptionHandler {
         StandardError err = new StandardError();
         err.setTimestamp(Instant.now());
         err.setStatus(status.value());
-        err.setError("Resource not found");
+        err.setError("Recurso não encontrado");
         err.setPath(request.getRequestURI());
         return ResponseEntity.status(status).body(err);
     }
@@ -30,7 +30,7 @@ public class ResourceExceptionHandler {
         StandardError err = new StandardError();
         err.setTimestamp(Instant.now());
         err.setStatus(status.value());
-        err.setError("Database exception");
+        err.setError("Exceção no banco de dados");
         err.setPath(request.getRequestURI());
         return ResponseEntity.status(status).body(err);
     }

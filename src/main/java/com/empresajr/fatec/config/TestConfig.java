@@ -107,7 +107,7 @@ public class TestConfig implements CommandLineRunner {
                         " Os três filmes foram rodados em simultâneo na Nova Zelândia, faturaram cerca de" +
                         " 3 bilhões (US$ 2.925.155.189) de dólares de receitas conjuntas de bilheteira"    +
                         " e foram galardoados com 17 Oscars, entre os 30 para os quais foram nomeados e"   +
-                        " é a franquia cinematográfica mais premiada da história", "", author1);
+                        " é a franquia cinematográfica mais premiada da história", "", author2);
 
         InternPost internPost2 = new InternPost(null,"Harry Potter e a Pedra Filosofal", internTopic2,  "Harry Potter"      +
                 " (Daniel Radcliffe) é um garoto órfão de dez anos que mora com seus desagradáveis tios, os Dursley,"       +
@@ -135,7 +135,7 @@ public class TestConfig implements CommandLineRunner {
 
         internTopicRepository.saveAll(Arrays.asList(internTopic1, internTopic2, internTopic3));
 
-        author1.getInternPosts().add(internPost1);
+        author2.getInternPosts().add(internPost1);
         author2.getInternPosts().add(internPost2);
 
         authorRepository.saveAll(Arrays.asList(author1, author2));

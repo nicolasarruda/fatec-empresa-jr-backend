@@ -1,9 +1,9 @@
 package com.empresajr.fatec.resources;
 
-import com.empresajr.fatec.dto.AuthorDTO;
-import com.empresajr.fatec.dto.AuthorNameAndEmailDTO;
-import com.empresajr.fatec.entities.Author;
+import com.empresajr.fatec.dto.author.request.AuthorDTO;
+import com.empresajr.fatec.dto.author.response.AuthorNameAndEmailDTO;
 import com.empresajr.fatec.services.AuthorService;
+import com.empresajr.fatec.services.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.domain.Page;
@@ -29,6 +29,9 @@ public class AuthorResource {
 
     @Autowired
     private AuthorService service;
+
+    @Autowired
+    private TopicService topicService;
 
     @GetMapping
     public ResponseEntity<List<AuthorNameAndEmailDTO>> findAll(){
@@ -66,21 +69,22 @@ public class AuthorResource {
      */
 
     @PostMapping
-    public ResponseEntity<AuthorDTO> insert(@RequestBody AuthorDTO dto){
+    public ResponseEntity<AuthorNameAndEmailDTO> insert(@RequestBody AuthorNameAndEmailDTO dto){
         dto = service.insert(dto);
+        AuthorDTO authorDTO = new AuthorDTO(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("{id}")
-                .buildAndExpand(dto.getId()).toUri();
+                .buildAndExpand(authorDTO.getId()).toUri();
         return ResponseEntity.created(uri).body(dto);
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<AuthorDTO> insert(@PathVariable Long id, @RequestBody AuthorDTO dto){
+    public ResponseEntity<AuthorNameAndEmailDTO> update(@PathVariable Long id, @RequestBody AuthorNameAndEmailDTO dto){
         dto = service.update(id, dto);
         return ResponseEntity.ok().body(dto);
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> insert(@PathVariable Long id){
+    public ResponseEntity<Void> delete(@PathVariable Long id){
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
