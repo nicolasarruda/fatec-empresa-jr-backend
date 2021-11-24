@@ -1,7 +1,11 @@
 package com.empresajr.fatec.services;
 
+import com.empresajr.fatec.dto.post.response.PostWithoutAuthorNameDTO;
 import com.empresajr.fatec.dto.topic.request.TopicDTO;
+import com.empresajr.fatec.dto.topic.response.TopicNameDTO;
+import com.empresajr.fatec.entities.Post;
 import com.empresajr.fatec.entities.Topic;
+import com.empresajr.fatec.repositories.PostRepository;
 import com.empresajr.fatec.repositories.TopicRepository;
 import com.empresajr.fatec.services.exceptions.DatabaseException;
 import com.empresajr.fatec.services.exceptions.ResourceNotFoundException;
@@ -24,40 +28,44 @@ public class TopicService {
     @Autowired
     private TopicRepository repository;
 
+    @Autowired
+    private PostRepository postRepository;
+
     @Transactional(readOnly = true)
-    public List<TopicDTO> findAll(){
+    public List<TopicNameDTO> findAll(){
         List<Topic> list = repository.findAll();
-        return list.stream().map(x -> new TopicDTO(x)).collect(Collectors.toList());
+        return list.stream().map(x -> new TopicNameDTO(x, x.getPosts())).collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
-    public Page<TopicDTO> findAllPaged(PageRequest pageRequest){
+    public Page<TopicNameDTO> findAllPaged(PageRequest pageRequest){
         Page<Topic> list = repository.findAll(pageRequest);
-        return list.map(x -> new TopicDTO(x));
+        return list.map(x -> new TopicNameDTO(x, x.getPosts()));
     }
 
     @Transactional(readOnly = true)
-    public TopicDTO findTopic(Long id){
+    public TopicNameDTO findTopic(Long id){
         Optional<Topic> obj = repository.findById(id);
         Topic entity = obj.orElseThrow(() -> new ResourceNotFoundException("Recurso não encontrado"));
-        return new TopicDTO(entity);
+        return new TopicNameDTO(entity, entity.getPosts());
     }
 
     @Transactional
     public TopicDTO insert(TopicDTO dto){
         Topic entity = new Topic();
-        copyToDto(entity, dto);
+        TopicNameDTO dtoTopicName = new TopicNameDTO(dto);
+        copyToDto(entity, dtoTopicName);
         entity = repository.save(entity);
         return new TopicDTO(entity);
     }
 
     @Transactional
-    public TopicDTO update(Long id, TopicDTO dto){
+    public TopicNameDTO update(Long id, TopicNameDTO dto){
         try {
             Topic entity = repository.getOne(id);
             copyToDto(entity, dto);
             entity = repository.save(entity);
-            return new TopicDTO(entity);
+            return new TopicNameDTO(entity, entity.getPosts());
         }
         catch (EntityNotFoundException e){
             throw new ResourceNotFoundException("Id não encontrado " + id);
@@ -76,8 +84,13 @@ public class TopicService {
         }
     }
 
-    private void copyToDto(Topic topic, TopicDTO dto) {
+    private void copyToDto(Topic topic, TopicNameDTO dto) {
         topic.setName(dto.getName());
+
+        for(PostWithoutAuthorNameDTO postDto : dto.getPosts()){
+            Post post = postRepository.getOne(postDto.getId());
+            topic.getPosts().add(post);
+        }
     }
 
 }

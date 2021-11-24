@@ -1,6 +1,7 @@
 package com.empresajr.fatec.dto.author.request;
 
 import com.empresajr.fatec.dto.author.response.AuthorNameAndEmailDTO;
+import com.empresajr.fatec.dto.internpost.response.InternPostWithoutAuthorNameDTO;
 import com.empresajr.fatec.dto.post.response.PostWithoutAuthorNameDTO;
 import com.empresajr.fatec.entities.Author;
 import com.empresajr.fatec.entities.Post;
@@ -21,6 +22,8 @@ public class AuthorDTO implements Serializable {
     private String email;
 
     private List<PostWithoutAuthorNameDTO> posts = new ArrayList<>();
+
+    private List<InternPostWithoutAuthorNameDTO> internPosts = new ArrayList<>();
 
     public AuthorDTO(Long id, String name, String email){
         this.id =id;

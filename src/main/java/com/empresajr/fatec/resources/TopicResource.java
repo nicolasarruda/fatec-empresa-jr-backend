@@ -1,6 +1,7 @@
 package com.empresajr.fatec.resources;
 
 import com.empresajr.fatec.dto.topic.request.TopicDTO;
+import com.empresajr.fatec.dto.topic.response.TopicNameDTO;
 import com.empresajr.fatec.services.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort.Direction;
@@ -29,38 +30,39 @@ public class TopicResource {
     private TopicService service;
 
     @GetMapping
-    public ResponseEntity<List<TopicDTO>> findAll(){
-        List<TopicDTO> list = service.findAll();
+    public ResponseEntity<List<TopicNameDTO>> findAll(){
+        List<TopicNameDTO> list = service.findAll();
         return ResponseEntity.ok().body(list);
     }
 
     @GetMapping("/pages")
-    public ResponseEntity<Page<TopicDTO>> findAllPaged(
+    public ResponseEntity<Page<TopicNameDTO>> findAllPaged(
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "linesPerPage", defaultValue = "6") Integer linesPerPage,
             @RequestParam(value = "direction", defaultValue = "ASC") String direction,
             @RequestParam(value = "orderBy", defaultValue = "name") String orderBy) {
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
-        Page<TopicDTO> list = service.findAllPaged(pageRequest);
+        Page<TopicNameDTO> list = service.findAllPaged(pageRequest);
         return ResponseEntity.ok().body(list);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<TopicDTO> findTopic(@PathVariable Long id) {
-        TopicDTO topic = service.findTopic(id);
+    public ResponseEntity<TopicNameDTO> findTopic(@PathVariable Long id) {
+        TopicNameDTO topic = service.findTopic(id);
         return ResponseEntity.ok().body(topic);
     }
 
     @PostMapping
-    public ResponseEntity<TopicDTO> insert(@RequestBody TopicDTO dto){
+    public ResponseEntity<TopicNameDTO> insert(@RequestBody TopicDTO dto){
         dto = service.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("{id}")
                 .buildAndExpand(dto.getId()).toUri();
-        return ResponseEntity.created(uri).body(dto);
+        TopicNameDTO dtoResponse = new TopicNameDTO(dto);
+        return ResponseEntity.created(uri).body(dtoResponse);
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<TopicDTO> update(@PathVariable Long id, @RequestBody TopicDTO dto){
+    public ResponseEntity<TopicNameDTO> update(@PathVariable Long id, @RequestBody TopicNameDTO dto){
         dto = service.update(id, dto);
         return ResponseEntity.ok().body(dto);
     }
