@@ -1,14 +1,11 @@
 package com.empresajr.fatec.dto.post.response;
 
-import com.empresajr.fatec.dto.author.request.AuthorDTO;
 import com.empresajr.fatec.dto.post.request.PostDTO;
-import com.empresajr.fatec.dto.topic.request.TopicDTO;
 import com.empresajr.fatec.entities.Author;
 import com.empresajr.fatec.entities.Post;
 import com.empresajr.fatec.entities.Topic;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.domain.Page;
 
 import java.io.Serializable;
 
@@ -33,16 +30,6 @@ public class PostWithoutAuthorNameDTO implements Serializable {
             author = entity.getAuthor().getName();
        }
 
-       /*
-       public PostWithoutAuthorNameDTO(Page<PostDTO> list){
-              for (PostDTO postDTO : list) {
-                     list.map(x -> new PostWithoutAuthorNameDTO(x));
-              }
-
-       }
-
-        */
-
        public PostWithoutAuthorNameDTO(Post entity, Topic top, Author aut){
               this(entity);
               topic = top.getName();
@@ -61,8 +48,6 @@ public class PostWithoutAuthorNameDTO implements Serializable {
               imgUrl = dto.getImgUrl();
               author = dto.getAuthor().getName();
        }
-
-
 
        public void setId(Long id) {
               this.id = id;
@@ -83,6 +68,5 @@ public class PostWithoutAuthorNameDTO implements Serializable {
        public void setImgUrl(String imgUrl) {
               this.imgUrl = imgUrl;
        }
-
 
 }

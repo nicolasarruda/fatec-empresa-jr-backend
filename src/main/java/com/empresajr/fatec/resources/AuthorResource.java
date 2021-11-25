@@ -58,16 +58,6 @@ public class AuthorResource {
         return ResponseEntity.ok().body(dto);
     }
 
-    /*
-    @GetMapping(value = "/filter")
-    public ResponseEntity<AuthorNameAndEmailDTO> findByEmailOrName(
-            @RequestParam(value = "name", defaultValue = "") String name,
-            @RequestParam(value = "email", defaultValue = "") String email){
-        AuthorNameAndEmailDTO dto = service.findByEmailOrName(name, email);
-        return ResponseEntity.ok().body(dto);
-    }
-     */
-
     @PostMapping
     public ResponseEntity<AuthorNameAndEmailDTO> insert(@RequestBody AuthorNameAndEmailDTO dto){
         dto = service.insert(dto);

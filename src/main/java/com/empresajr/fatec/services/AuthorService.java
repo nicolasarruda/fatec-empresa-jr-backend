@@ -49,16 +49,6 @@ public class AuthorService {
         return new AuthorNameAndEmailDTO(entity, entity.getPosts());
     }
 
-    /*
-    @Transactional(readOnly = true)
-    public AuthorNameAndEmailDTO findByEmailOrName(String name, String email){
-        Optional<Author> obj = repository.findByEmailOrName(name, email);
-        // do the filter here
-        Author entity = obj.orElseThrow (() -> new ResourceNotFoundException("Recurso não encontrado"));
-        return new AuthorNameAndEmailDTO(entity);
-    }
-     */
-
     @Transactional
     public AuthorNameAndEmailDTO insert(AuthorNameAndEmailDTO dto){
         Author entity = new Author();

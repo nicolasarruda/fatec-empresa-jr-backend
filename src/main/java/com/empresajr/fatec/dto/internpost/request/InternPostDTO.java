@@ -1,10 +1,10 @@
-package com.empresajr.fatec.dto.post.request;
+package com.empresajr.fatec.dto.internpost.request;
 
 import com.empresajr.fatec.dto.author.request.AuthorDTO;
-import com.empresajr.fatec.dto.topic.request.TopicDTO;
+import com.empresajr.fatec.dto.interntopic.request.InternTopicDTO;
 import com.empresajr.fatec.entities.Author;
-import com.empresajr.fatec.entities.Post;
-import com.empresajr.fatec.entities.Topic;
+import com.empresajr.fatec.entities.InternPost;
+import com.empresajr.fatec.entities.InternTopic;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -12,32 +12,32 @@ import java.io.Serializable;
 
 @Getter
 @NoArgsConstructor
-public class PostDTO implements Serializable {
+public class InternPostDTO implements Serializable {
        private static final long serialVersionUID = 1L;
 
        private Long id;
        private String title;
-       private TopicDTO topic;
-       private String content;
+       private InternTopicDTO internTopic;
+       private String description;
        private String imgUrl;
        private AuthorDTO author;
 
-       public PostDTO(Post entity){
+       public InternPostDTO(InternPost entity){
             id = entity.getId();
             title = entity.getTitle();
-            content = entity.getContent();
+            description = entity.getDescription();
             imgUrl = entity.getImgUrl();
        }
 
-       public PostDTO(Post entity, Topic top, Author aut){
+       public InternPostDTO(InternPost entity, InternTopic top, Author aut){
               this(entity);
-              topic = new TopicDTO(top);
+              internTopic = new InternTopicDTO(top);
               author = new AuthorDTO(aut);
        }
 
-       public PostDTO(Post entity, Topic top){
+       public InternPostDTO(InternPost entity, InternTopic top){
               this(entity);
-              topic = new TopicDTO(top);
+              internTopic = new InternTopicDTO(top);
        }
 
        public void setId(Long id) {
@@ -48,12 +48,12 @@ public class PostDTO implements Serializable {
               this.title = title;
        }
 
-       public void setTopic(TopicDTO topic) {
-              this.topic = topic;
+       public void setTopic(InternTopicDTO internTopic) {
+              this.internTopic = internTopic;
        }
 
-       public void setContent(String content) {
-              this.content = content;
+       public void setDescription(String description) {
+              this.description = description;
        }
 
        public void setImgUrl(String imgUrl) {

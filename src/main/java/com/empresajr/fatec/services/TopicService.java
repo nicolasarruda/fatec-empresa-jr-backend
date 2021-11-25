@@ -92,5 +92,4 @@ public class TopicService {
             topic.getPosts().add(post);
         }
     }
-
 }

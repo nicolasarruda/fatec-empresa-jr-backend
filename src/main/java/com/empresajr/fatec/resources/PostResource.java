@@ -8,7 +8,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
@@ -48,26 +56,9 @@ public class PostResource {
         return ResponseEntity.ok().body(dto);
     }
 
-    /*
-    @GetMapping(value = "/find-titles")
-    @ResponseBody
-    public ResponseEntity<List<Post>> findPostByTitleAndTopic(@RequestParam(value = "title", defaultValue = "") String title,
-                                                @RequestParam(value = "topic", defaultValue = "") String topic) {
-        String encodedTitle = URL.decodeParameter(title);
-        String encodedTopic = URL.decodeParameter(topic);
-
-        List<Post> post = service.findByTitleAndTopic(encodedTitle, encodedTopic);
-
-        return ResponseEntity.ok().body(post);
-    }
-     */
-
     @PostMapping
     public ResponseEntity<PostWithoutAuthorNameDTO> insert(@RequestBody PostDTO dto){
         dto = service.insert(dto);
-        System.out.println("############# RESPONSE ##############");
-        System.out.println(dto.getAuthor().getName());
-        System.out.println(dto.getAuthor().getName());
         PostWithoutAuthorNameDTO response = new PostWithoutAuthorNameDTO(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("{id}")
                 .buildAndExpand(response.getId()).toUri();
@@ -78,7 +69,6 @@ public class PostResource {
     public ResponseEntity<PostWithoutAuthorNameDTO> update(@PathVariable Long id, @RequestBody PostDTO dto){
         dto = service.update(id, dto);
         PostWithoutAuthorNameDTO response = new PostWithoutAuthorNameDTO(dto);
-        System.out.println("############# RESPONSE ##############");
         return ResponseEntity.ok().body(response);
     }
 

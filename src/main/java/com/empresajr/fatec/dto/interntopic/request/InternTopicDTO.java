@@ -1,6 +1,6 @@
-package com.empresajr.fatec.dto.topic.request;
+package com.empresajr.fatec.dto.interntopic.request;
 
-import com.empresajr.fatec.entities.Topic;
+import com.empresajr.fatec.entities.InternTopic;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -8,18 +8,18 @@ import java.io.Serializable;
 
 @Getter
 @NoArgsConstructor
-public class TopicDTO implements Serializable {
+public class InternTopicDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long id;
     private String name;
 
-    public TopicDTO(Long id, String name) {
+    public InternTopicDTO(Long id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public TopicDTO(Topic entity){
+    public InternTopicDTO(InternTopic entity){
          id = entity.getId();
          name = entity.getName();
     }
@@ -31,5 +31,4 @@ public class TopicDTO implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-
 }

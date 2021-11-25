@@ -94,19 +94,8 @@ public class PostService {
         entity.setTopic(topic);
         Author author = authorRepository.getOne(dto.getAuthor().getId());
         entity.setAuthor(author);
-
     }
-
 }
-
-
-
-    /*
-    public List<Post> findByTitleAndTopic(String title, String topic){
-        return repository.findByTitleIgnoreCaseOrTopicIgnoreCase(title, topic);
-    }
-
-     */
 
 
 
