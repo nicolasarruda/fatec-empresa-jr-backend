@@ -2,9 +2,9 @@ package com.empresajr.fatec.services;
 
 import com.empresajr.fatec.dto.internpost.request.InternPostDTO;
 import com.empresajr.fatec.dto.internpost.response.InternPostWithoutAuthorNameDTO;
-import com.empresajr.fatec.dto.post.request.PostDTO;
-import com.empresajr.fatec.dto.post.response.PostWithoutAuthorNameDTO;
-import com.empresajr.fatec.entities.*;
+import com.empresajr.fatec.entities.Author;
+import com.empresajr.fatec.entities.InternPost;
+import com.empresajr.fatec.entities.InternTopic;
 import com.empresajr.fatec.repositories.AuthorRepository;
 import com.empresajr.fatec.repositories.InternPostRepository;
 import com.empresajr.fatec.repositories.InternTopicRepository;
@@ -55,6 +55,7 @@ public class InternPostService {
     @Transactional
     public InternPostDTO insert(InternPostDTO dto){
         InternPost entity = new InternPost();
+        insertAuthorToDto(dto, entity);
         copyToDto(dto, entity);
         entity = repository.save(entity);
         return new InternPostDTO(entity, entity.getInternTopic(), entity.getAuthor());
@@ -89,6 +90,9 @@ public class InternPostService {
 
         InternTopic topic = internTopicRepository.getOne(dto.getInternTopic().getId());
         entity.setInternTopic(topic);
+    }
+
+    private void insertAuthorToDto(InternPostDTO dto, InternPost entity){
         Author author = authorRepository.getOne(dto.getAuthor().getId());
         entity.setAuthor(author);
     }

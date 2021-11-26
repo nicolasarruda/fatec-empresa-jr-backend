@@ -4,7 +4,6 @@ import com.empresajr.fatec.dto.internpost.response.InternPostWithoutAuthorNameDT
 import com.empresajr.fatec.dto.interntopic.request.InternTopicDTO;
 import com.empresajr.fatec.entities.InternPost;
 import com.empresajr.fatec.entities.InternTopic;
-import com.empresajr.fatec.entities.Topic;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

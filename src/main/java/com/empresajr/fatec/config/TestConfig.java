@@ -1,25 +1,25 @@
 package com.empresajr.fatec.config;
 
-import com.empresajr.fatec.entities.*;
-import com.empresajr.fatec.entities.enums.TopicType;
-import com.empresajr.fatec.repositories.*;
+import com.empresajr.fatec.entities.Author;
+import com.empresajr.fatec.entities.InternPost;
+import com.empresajr.fatec.entities.InternTopic;
+import com.empresajr.fatec.entities.Post;
+import com.empresajr.fatec.entities.Topic;
+import com.empresajr.fatec.repositories.AuthorRepository;
+import com.empresajr.fatec.repositories.InternPostRepository;
+import com.empresajr.fatec.repositories.InternTopicRepository;
+import com.empresajr.fatec.repositories.PostRepository;
+import com.empresajr.fatec.repositories.TopicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
-
-import java.time.Instant;
 import java.util.Arrays;
-
-import java.util.Date;
 
 @Configuration
 @Profile("test")
 public class TestConfig implements CommandLineRunner {
-
-    @Autowired
-    private UserRepository userRepository;
 
     @Autowired
     private AuthorRepository authorRepository;
@@ -38,11 +38,6 @@ public class TestConfig implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-
-        User user1 = new User(null, "marcos@mail.com");
-        User user2 = new User(null, "ana@mail.com");
-
-        Date date = Date.from(Instant.parse("2021-10-04T22:12:55Z"));
 
         Author author1 = new Author(null, "Maria", "maria@mail.com");
 
@@ -139,9 +134,6 @@ public class TestConfig implements CommandLineRunner {
         author2.getInternPosts().add(internPost2);
 
         authorRepository.saveAll(Arrays.asList(author1, author2));
-
-        userRepository.saveAll(Arrays.asList(user1, user2));
-
 
     }
 }

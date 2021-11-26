@@ -59,7 +59,7 @@ public class AuthorResource {
     }
 
     @PostMapping
-    public ResponseEntity<AuthorNameAndEmailDTO> insert(@RequestBody AuthorNameAndEmailDTO dto){
+    public ResponseEntity<AuthorNameAndEmailDTO> insert(@RequestBody AuthorNameAndEmailDTO dto) {
         dto = service.insert(dto);
         AuthorDTO authorDTO = new AuthorDTO(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("{id}")

@@ -3,16 +3,12 @@ package com.empresajr.fatec.services;
 import com.empresajr.fatec.dto.internpost.response.InternPostWithoutAuthorNameDTO;
 import com.empresajr.fatec.dto.interntopic.request.InternTopicDTO;
 import com.empresajr.fatec.dto.interntopic.response.InternTopicNameDTO;
-import com.empresajr.fatec.dto.post.response.PostWithoutAuthorNameDTO;
-import com.empresajr.fatec.dto.topic.request.TopicDTO;
-import com.empresajr.fatec.dto.topic.response.TopicNameDTO;
 import com.empresajr.fatec.entities.InternPost;
 import com.empresajr.fatec.entities.InternTopic;
-import com.empresajr.fatec.entities.Post;
-import com.empresajr.fatec.entities.Topic;
 import com.empresajr.fatec.repositories.InternPostRepository;
 import com.empresajr.fatec.repositories.InternTopicRepository;
 import com.empresajr.fatec.services.exceptions.DatabaseException;
+import com.empresajr.fatec.services.exceptions.InsertQueryException;
 import com.empresajr.fatec.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -59,6 +55,8 @@ public class InternTopicService {
     @Transactional
     public InternTopicDTO insert(InternTopicDTO dto){
         InternTopic entity = new InternTopic();
+        String name = dto.getName();
+        existsByName(name);
         InternTopicNameDTO dtoInternTopicName = new InternTopicNameDTO(dto);
         copyToDto(entity, dtoInternTopicName);
         entity = repository.save(entity);
@@ -96,6 +94,13 @@ public class InternTopicService {
         for(InternPostWithoutAuthorNameDTO internPostDto : dto.getInternPosts()){
             InternPost post = internPostRepository.getOne(internPostDto.getId());
             topic.getInternPosts().add(post);
+        }
+    }
+
+    private void existsByName(String name){
+        if(repository.existsByName(name)) {
+            throw new InsertQueryException("Erro na criação do autor: email " + name
+                    + "já existente");
         }
     }
 }

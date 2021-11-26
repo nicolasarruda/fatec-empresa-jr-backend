@@ -2,8 +2,6 @@ package com.empresajr.fatec.resources;
 
 import com.empresajr.fatec.dto.internpost.request.InternPostDTO;
 import com.empresajr.fatec.dto.internpost.response.InternPostWithoutAuthorNameDTO;
-import com.empresajr.fatec.dto.post.request.PostDTO;
-import com.empresajr.fatec.entities.InternPost;
 import com.empresajr.fatec.services.InternPostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -59,9 +57,6 @@ public class InternPostResource {
     @PostMapping
     public ResponseEntity<InternPostWithoutAuthorNameDTO> insert(@RequestBody InternPostDTO dto){
         dto = service.insert(dto);
-        System.out.println("############# RESPONSE ##############");
-        System.out.println(dto.getAuthor().getName());
-        System.out.println(dto.getAuthor().getName());
         InternPostWithoutAuthorNameDTO response = new InternPostWithoutAuthorNameDTO(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("{id}")
                 .buildAndExpand(response.getId()).toUri();
@@ -72,7 +67,6 @@ public class InternPostResource {
     public ResponseEntity<InternPostWithoutAuthorNameDTO> update(@PathVariable Long id, @RequestBody InternPostDTO dto){
         dto = service.update(id, dto);
         InternPostWithoutAuthorNameDTO response = new InternPostWithoutAuthorNameDTO(dto);
-        System.out.println("############# RESPONSE ##############");
         return ResponseEntity.ok().body(response);
     }
 

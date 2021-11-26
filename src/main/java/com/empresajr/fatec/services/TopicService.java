@@ -8,6 +8,7 @@ import com.empresajr.fatec.entities.Topic;
 import com.empresajr.fatec.repositories.PostRepository;
 import com.empresajr.fatec.repositories.TopicRepository;
 import com.empresajr.fatec.services.exceptions.DatabaseException;
+import com.empresajr.fatec.services.exceptions.InsertQueryException;
 import com.empresajr.fatec.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -53,6 +54,8 @@ public class TopicService {
     @Transactional
     public TopicDTO insert(TopicDTO dto){
         Topic entity = new Topic();
+        String name = dto.getName();
+        existsByName(name);
         TopicNameDTO dtoTopicName = new TopicNameDTO(dto);
         copyToDto(entity, dtoTopicName);
         entity = repository.save(entity);
@@ -90,6 +93,13 @@ public class TopicService {
         for(PostWithoutAuthorNameDTO postDto : dto.getPosts()){
             Post post = postRepository.getOne(postDto.getId());
             topic.getPosts().add(post);
+        }
+    }
+
+    private void existsByName(String name){
+        if(repository.existsByName(name)) {
+            throw new InsertQueryException("Erro na criação do autor: email " + name
+                    + "já existente");
         }
     }
 }

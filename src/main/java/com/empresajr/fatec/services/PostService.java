@@ -57,10 +57,11 @@ public class PostService {
 
     @Transactional
     public PostDTO insert(PostDTO dto){
-        Post entity = new Post();
-        copyToDto(dto, entity);
-        entity = repository.save(entity);
-        return new PostDTO(entity, entity.getTopic(), entity.getAuthor());
+            Post entity = new Post();
+            insertAuthorToDto(dto, entity);
+            copyToDto(dto, entity);
+            entity = repository.save(entity);
+            return new PostDTO(entity, entity.getTopic(), entity.getAuthor());
     }
 
     @Transactional
@@ -92,6 +93,10 @@ public class PostService {
 
         Topic topic = topicRepository.getOne(dto.getTopic().getId());
         entity.setTopic(topic);
+
+    }
+
+    private void insertAuthorToDto(PostDTO dto, Post entity){
         Author author = authorRepository.getOne(dto.getAuthor().getId());
         entity.setAuthor(author);
     }
