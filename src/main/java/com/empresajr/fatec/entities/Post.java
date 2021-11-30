@@ -23,7 +23,7 @@ import java.util.Objects;
 @Getter
 @Entity
 @NoArgsConstructor
-@Table(name = "tb_post")
+@Table(name = "tb_posts")
 public class Post implements Serializable {
     private static final long serialVersionUID = 1L;
 

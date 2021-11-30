@@ -21,7 +21,7 @@ import java.util.Objects;
 @Getter
 @Entity
 @NoArgsConstructor
-@Table(name = "tb_author")
+@Table(name = "tb_authors")
 public class Author implements Serializable {
     private static final long serialVersionUID = 1L;
 

@@ -18,7 +18,7 @@ import java.util.Objects;
 @Getter
 @Entity
 @NoArgsConstructor
-@Table(name = "tb_topic")
+@Table(name = "tb_topics")
 public class Topic {
 
     @Id

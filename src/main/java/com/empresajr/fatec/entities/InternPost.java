@@ -23,7 +23,7 @@ import java.util.Objects;
 @Getter
 @Entity
 @NoArgsConstructor
-@Table(name = "tb_internPost")
+@Table(name = "tb_intern_posts")
 public class InternPost implements Serializable {
     private static final long serialVersionUID = 1L;
 
