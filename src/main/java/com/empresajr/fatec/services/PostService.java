@@ -56,21 +56,21 @@ public class PostService {
     }
 
     @Transactional
-    public PostDTO insert(PostDTO dto){
+    public PostWithoutAuthorNameDTO insert(PostDTO dto){
             Post entity = new Post();
             insertAuthorToDto(dto, entity);
             copyToDto(dto, entity);
             entity = repository.save(entity);
-            return new PostDTO(entity, entity.getTopic(), entity.getAuthor());
+            return new PostWithoutAuthorNameDTO(entity, entity.getTopic(), entity.getAuthor());
     }
 
     @Transactional
-    public PostDTO update(Long id, PostDTO dto) {
+    public PostWithoutAuthorNameDTO update(Long id, PostDTO dto) {
         try {
             Post entity = repository.getOne(id);
             copyToDto(dto, entity);
             entity = repository.save(entity);
-            return new PostDTO(entity, entity.getTopic(), entity.getAuthor());
+            return new PostWithoutAuthorNameDTO(entity, entity.getTopic(), entity.getAuthor());
         }
         catch (EntityNotFoundException e){
             throw new ResourceNotFoundException("Id não encontrado" + id);
@@ -91,13 +91,13 @@ public class PostService {
         entity.setContent(dto.getContent());
         entity.setImgUrl(dto.getImgUrl());
 
-        Topic topic = topicRepository.getOne(dto.getTopic().getId());
+        Topic topic = topicRepository.getOne(dto.getTopic_id());
         entity.setTopic(topic);
 
     }
 
     private void insertAuthorToDto(PostDTO dto, Post entity){
-        Author author = authorRepository.getOne(dto.getAuthor().getId());
+        Author author = authorRepository.getOne(dto.getAuthor_id());
         entity.setAuthor(author);
     }
 }

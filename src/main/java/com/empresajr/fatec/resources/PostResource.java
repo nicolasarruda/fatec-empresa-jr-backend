@@ -58,8 +58,7 @@ public class PostResource {
 
     @PostMapping
     public ResponseEntity<PostWithoutAuthorNameDTO> insert(@RequestBody PostDTO dto){
-        dto = service.insert(dto);
-        PostWithoutAuthorNameDTO response = new PostWithoutAuthorNameDTO(dto);
+        PostWithoutAuthorNameDTO response = service.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("{id}")
                 .buildAndExpand(response.getId()).toUri();
         return ResponseEntity.created(uri).body(response);
@@ -67,8 +66,7 @@ public class PostResource {
 
     @PutMapping(value = "/{id}")
     public ResponseEntity<PostWithoutAuthorNameDTO> update(@PathVariable Long id, @RequestBody PostDTO dto){
-        dto = service.update(id, dto);
-        PostWithoutAuthorNameDTO response = new PostWithoutAuthorNameDTO(dto);
+        PostWithoutAuthorNameDTO response = service.update(id, dto);
         return ResponseEntity.ok().body(response);
     }
 

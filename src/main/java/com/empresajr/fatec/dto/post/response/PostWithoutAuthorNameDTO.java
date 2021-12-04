@@ -40,15 +40,6 @@ public class PostWithoutAuthorNameDTO implements Serializable {
               this(entity);
        }
 
-       public PostWithoutAuthorNameDTO(PostDTO dto){
-              id = dto.getId();
-              title = dto.getTitle();
-              topic = dto.getTopic().getName();
-              content = dto.getContent();
-              imgUrl = dto.getImgUrl();
-              author = dto.getAuthor().getName();
-       }
-
        public void setId(Long id) {
               this.id = id;
        }

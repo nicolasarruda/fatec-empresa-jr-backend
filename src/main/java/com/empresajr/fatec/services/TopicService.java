@@ -56,14 +56,13 @@ public class TopicService {
         Topic entity = new Topic();
         String name = dto.getName();
         existsByName(name);
-        TopicNameDTO dtoTopicName = new TopicNameDTO(dto);
-        copyToDto(entity, dtoTopicName);
+        copyToDto(entity, dto);
         entity = repository.save(entity);
         return new TopicDTO(entity);
     }
 
     @Transactional
-    public TopicNameDTO update(Long id, TopicNameDTO dto){
+    public TopicNameDTO update(Long id, TopicDTO dto){
         try {
             Topic entity = repository.getOne(id);
             copyToDto(entity, dto);
@@ -87,7 +86,7 @@ public class TopicService {
         }
     }
 
-    private void copyToDto(Topic topic, TopicNameDTO dto) {
+    private void copyToDto(Topic topic, TopicDTO dto) {
         topic.setName(dto.getName());
 
         for(PostWithoutAuthorNameDTO postDto : dto.getPosts()){
@@ -98,7 +97,7 @@ public class TopicService {
 
     private void existsByName(String name){
         if(repository.existsByName(name)) {
-            throw new InsertQueryException("Erro na criação do autor: email " + name
+            throw new InsertQueryException("Erro na criação do tópico: tópico " + name
                     + "já existente");
         }
     }

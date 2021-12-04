@@ -62,9 +62,9 @@ public class TopicResource {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<TopicNameDTO> update(@PathVariable Long id, @RequestBody TopicNameDTO dto){
-        dto = service.update(id, dto);
-        return ResponseEntity.ok().body(dto);
+    public ResponseEntity<TopicNameDTO> update(@PathVariable Long id, @RequestBody TopicDTO dto){
+        TopicNameDTO response = service.update(id, dto);
+        return ResponseEntity.ok().body(response);
     }
 
     @DeleteMapping(value = "/{id}")

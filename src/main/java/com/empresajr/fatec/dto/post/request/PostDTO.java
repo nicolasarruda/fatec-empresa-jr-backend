@@ -17,10 +17,10 @@ public class PostDTO implements Serializable {
 
        private Long id;
        private String title;
-       private TopicDTO topic;
+       private Long topic_id;
        private String content;
        private String imgUrl;
-       private AuthorDTO author;
+       private Long author_id;
 
        public PostDTO(Post entity){
             id = entity.getId();
@@ -31,13 +31,10 @@ public class PostDTO implements Serializable {
 
        public PostDTO(Post entity, Topic top, Author aut){
               this(entity);
-              topic = new TopicDTO(top);
-              author = new AuthorDTO(aut);
        }
 
        public PostDTO(Post entity, Topic top){
               this(entity);
-              topic = new TopicDTO(top);
        }
 
        public void setId(Long id) {
@@ -48,8 +45,8 @@ public class PostDTO implements Serializable {
               this.title = title;
        }
 
-       public void setTopic(TopicDTO topic) {
-              this.topic = topic;
+       public void setTopic(Long topic_id) {
+              this.topic_id = topic_id;
        }
 
        public void setContent(String content) {
@@ -60,8 +57,8 @@ public class PostDTO implements Serializable {
               this.imgUrl = imgUrl;
        }
 
-       public void setAuthor(AuthorDTO author){
-              this.author = author;
+       public void setAuthor(Long author_id){
+              this.author_id = author_id;
        }
 
 }

@@ -99,7 +99,7 @@ public class InternTopicService {
 
     private void existsByName(String name){
         if(repository.existsByName(name)) {
-            throw new InsertQueryException("Erro na criação do autor: email " + name
+            throw new InsertQueryException("Erro na criação do tópico de estágio: tópico de estágio " + name
                     + "já existente");
         }
     }
