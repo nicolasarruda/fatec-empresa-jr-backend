@@ -56,8 +56,7 @@ public class InternPostResource {
 
     @PostMapping
     public ResponseEntity<InternPostWithoutAuthorNameDTO> insert(@RequestBody InternPostDTO dto){
-        dto = service.insert(dto);
-        InternPostWithoutAuthorNameDTO response = new InternPostWithoutAuthorNameDTO(dto);
+        InternPostWithoutAuthorNameDTO response = service.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("{id}")
                 .buildAndExpand(response.getId()).toUri();
         return ResponseEntity.created(uri).body(response);
@@ -65,8 +64,7 @@ public class InternPostResource {
 
     @PutMapping(value = "/{id}")
     public ResponseEntity<InternPostWithoutAuthorNameDTO> update(@PathVariable Long id, @RequestBody InternPostDTO dto){
-        dto = service.update(id, dto);
-        InternPostWithoutAuthorNameDTO response = new InternPostWithoutAuthorNameDTO(dto);
+        InternPostWithoutAuthorNameDTO response = service.update(id, dto);
         return ResponseEntity.ok().body(response);
     }
 

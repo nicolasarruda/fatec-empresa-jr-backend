@@ -42,15 +42,6 @@ public class InternPostWithoutAuthorNameDTO implements Serializable {
               this(entity);
        }
 
-       public InternPostWithoutAuthorNameDTO(InternPostDTO dto) {
-              id = dto.getId();
-              title = dto.getTitle();
-              internTopic = dto.getInternTopic().getName();
-              description = dto.getDescription();
-              imgUrl = dto.getImgUrl();
-              author = dto.getAuthor().getName();
-       }
-
        public void setId(Long id) {
               this.id = id;
        }

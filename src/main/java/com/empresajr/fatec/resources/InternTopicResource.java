@@ -54,17 +54,16 @@ public class InternTopicResource {
 
     @PostMapping
     public ResponseEntity<InternTopicNameDTO> insert(@RequestBody InternTopicDTO dto){
-        dto = service.insert(dto);
+        InternTopicNameDTO response = service.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("{id}")
                 .buildAndExpand(dto.getId()).toUri();
-        InternTopicNameDTO dtoResponse = new InternTopicNameDTO(dto);
-        return ResponseEntity.created(uri).body(dtoResponse);
+        return ResponseEntity.created(uri).body(response);
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<InternTopicNameDTO> update(@PathVariable Long id, @RequestBody InternTopicNameDTO dto){
-        dto = service.update(id, dto);
-        return ResponseEntity.ok().body(dto);
+    public ResponseEntity<InternTopicNameDTO> update(@PathVariable Long id, @RequestBody InternTopicDTO dto){
+        InternTopicNameDTO response = service.update(id, dto);
+        return ResponseEntity.ok().body(response);
     }
 
     @DeleteMapping(value = "/{id}")

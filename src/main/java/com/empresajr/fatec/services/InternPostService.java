@@ -53,21 +53,21 @@ public class InternPostService {
     }
 
     @Transactional
-    public InternPostDTO insert(InternPostDTO dto){
+    public InternPostWithoutAuthorNameDTO insert(InternPostDTO dto){
         InternPost entity = new InternPost();
         insertAuthorToDto(dto, entity);
         copyToDto(dto, entity);
         entity = repository.save(entity);
-        return new InternPostDTO(entity, entity.getInternTopic(), entity.getAuthor());
+        return new InternPostWithoutAuthorNameDTO(entity, entity.getInternTopic(), entity.getAuthor());
     }
 
     @Transactional
-    public InternPostDTO update(Long id, InternPostDTO dto) {
+    public InternPostWithoutAuthorNameDTO update(Long id, InternPostDTO dto) {
         try {
             InternPost entity = repository.getOne(id);
             copyToDto(dto, entity);
             entity = repository.save(entity);
-            return new InternPostDTO(entity, entity.getInternTopic(), entity.getAuthor());
+            return new InternPostWithoutAuthorNameDTO(entity, entity.getInternTopic(), entity.getAuthor());
         }
         catch (EntityNotFoundException e){
             throw new ResourceNotFoundException("Id não encontrado" + id);
@@ -88,12 +88,12 @@ public class InternPostService {
         entity.setDescription(dto.getDescription());
         entity.setImgUrl(dto.getImgUrl());
 
-        InternTopic topic = internTopicRepository.getOne(dto.getInternTopic().getId());
+        InternTopic topic = internTopicRepository.getOne(dto.getInternTopic_id());
         entity.setInternTopic(topic);
     }
 
     private void insertAuthorToDto(InternPostDTO dto, InternPost entity){
-        Author author = authorRepository.getOne(dto.getAuthor().getId());
+        Author author = authorRepository.getOne(dto.getAuthor_id());
         entity.setAuthor(author);
     }
 }

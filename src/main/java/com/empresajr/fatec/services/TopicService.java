@@ -52,13 +52,13 @@ public class TopicService {
     }
 
     @Transactional
-    public TopicDTO insert(TopicDTO dto){
+    public TopicNameDTO insert(TopicDTO dto){
         Topic entity = new Topic();
         String name = dto.getName();
         existsByName(name);
         copyToDto(entity, dto);
         entity = repository.save(entity);
-        return new TopicDTO(entity);
+        return new TopicNameDTO(entity);
     }
 
     @Transactional

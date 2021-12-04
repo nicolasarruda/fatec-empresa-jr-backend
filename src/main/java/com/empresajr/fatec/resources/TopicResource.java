@@ -54,11 +54,10 @@ public class TopicResource {
 
     @PostMapping
     public ResponseEntity<TopicNameDTO> insert(@RequestBody TopicDTO dto){
-        dto = service.insert(dto);
+        TopicNameDTO response = service.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("{id}")
                 .buildAndExpand(dto.getId()).toUri();
-        TopicNameDTO dtoResponse = new TopicNameDTO(dto);
-        return ResponseEntity.created(uri).body(dtoResponse);
+        return ResponseEntity.created(uri).body(response);
     }
 
     @PutMapping(value = "/{id}")

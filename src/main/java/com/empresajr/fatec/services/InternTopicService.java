@@ -53,18 +53,17 @@ public class InternTopicService {
 
 
     @Transactional
-    public InternTopicDTO insert(InternTopicDTO dto){
+    public InternTopicNameDTO insert(InternTopicDTO dto){
         InternTopic entity = new InternTopic();
         String name = dto.getName();
         existsByName(name);
-        InternTopicNameDTO dtoInternTopicName = new InternTopicNameDTO(dto);
-        copyToDto(entity, dtoInternTopicName);
+        copyToDto(entity, dto);
         entity = repository.save(entity);
-        return new InternTopicDTO(entity);
+        return new InternTopicNameDTO(entity);
     }
 
     @Transactional
-    public InternTopicNameDTO update(Long id, InternTopicNameDTO dto){
+    public InternTopicNameDTO update(Long id, InternTopicDTO dto){
         try {
             InternTopic entity = repository.getOne(id);
             copyToDto(entity, dto);
@@ -88,7 +87,7 @@ public class InternTopicService {
         }
     }
 
-    private void copyToDto(InternTopic topic, InternTopicNameDTO dto) {
+    private void copyToDto(InternTopic topic, InternTopicDTO dto) {
         topic.setName(dto.getName());
 
         for(InternPostWithoutAuthorNameDTO internPostDto : dto.getInternPosts()){

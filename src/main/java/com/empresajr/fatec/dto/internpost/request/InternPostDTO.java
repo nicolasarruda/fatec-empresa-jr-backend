@@ -17,10 +17,10 @@ public class InternPostDTO implements Serializable {
 
        private Long id;
        private String title;
-       private InternTopicDTO internTopic;
+       private Long internTopic_id;
        private String description;
        private String imgUrl;
-       private AuthorDTO author;
+       private Long author_id;
 
        public InternPostDTO(InternPost entity){
             id = entity.getId();
@@ -31,13 +31,10 @@ public class InternPostDTO implements Serializable {
 
        public InternPostDTO(InternPost entity, InternTopic top, Author aut){
               this(entity);
-              internTopic = new InternTopicDTO(top);
-              author = new AuthorDTO(aut);
        }
 
        public InternPostDTO(InternPost entity, InternTopic top){
               this(entity);
-              internTopic = new InternTopicDTO(top);
        }
 
        public void setId(Long id) {
@@ -48,8 +45,8 @@ public class InternPostDTO implements Serializable {
               this.title = title;
        }
 
-       public void setTopic(InternTopicDTO internTopic) {
-              this.internTopic = internTopic;
+       public void setTopic(Long internTopic_id) {
+              this.internTopic_id = internTopic_id;
        }
 
        public void setDescription(String description) {
@@ -60,8 +57,8 @@ public class InternPostDTO implements Serializable {
               this.imgUrl = imgUrl;
        }
 
-       public void setAuthor(AuthorDTO author){
-              this.author = author;
+       public void setAuthor(Long author_id){
+              this.author_id = author_id;
        }
 
 }
