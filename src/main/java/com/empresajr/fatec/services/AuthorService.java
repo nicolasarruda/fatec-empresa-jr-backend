@@ -69,7 +69,7 @@ public class AuthorService {
     @Transactional
     public AuthorNameAndEmailDTO update(Long id,AuthorNameAndEmailDTO dto){
         try {
-            Author entity = repository.getOne(id);
+            Author entity = repository.getById(id);
             copyToDto(dto, entity);
             entity = repository.save(entity);
             return new AuthorNameAndEmailDTO(entity);
@@ -96,11 +96,11 @@ public class AuthorService {
         entity.setEmail(dto.getEmail());
 
         for(PostWithoutAuthorNameDTO postDto : dto.getPosts()){
-            Post post = postRepository.getOne(postDto.getId());
+            Post post = postRepository.getById(postDto.getId());
             entity.getPosts().add(post);
         }
         for (InternPostWithoutAuthorNameDTO internPostDto : dto.getInternPosts()){
-            InternPost internPost = internPostRepository.getOne(internPostDto.getId());
+            InternPost internPost = internPostRepository.getById(internPostDto.getId());
             entity.getInternPosts().add(internPost);
         }
     }

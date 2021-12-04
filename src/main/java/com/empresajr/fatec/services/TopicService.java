@@ -64,7 +64,7 @@ public class TopicService {
     @Transactional
     public TopicNameDTO update(Long id, TopicDTO dto){
         try {
-            Topic entity = repository.getOne(id);
+            Topic entity = repository.getById(id);
             copyToDto(entity, dto);
             entity = repository.save(entity);
             return new TopicNameDTO(entity, entity.getPosts());
@@ -90,7 +90,7 @@ public class TopicService {
         topic.setName(dto.getName());
 
         for(PostWithoutAuthorNameDTO postDto : dto.getPosts()){
-            Post post = postRepository.getOne(postDto.getId());
+            Post post = postRepository.getById(postDto.getId());
             topic.getPosts().add(post);
         }
     }

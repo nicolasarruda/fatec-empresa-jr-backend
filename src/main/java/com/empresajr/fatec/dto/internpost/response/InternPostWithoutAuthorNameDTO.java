@@ -1,7 +1,5 @@
 package com.empresajr.fatec.dto.internpost.response;
 
-import com.empresajr.fatec.dto.internpost.request.InternPostDTO;
-
 import com.empresajr.fatec.entities.Author;
 import com.empresajr.fatec.entities.InternPost;
 import com.empresajr.fatec.entities.InternTopic;

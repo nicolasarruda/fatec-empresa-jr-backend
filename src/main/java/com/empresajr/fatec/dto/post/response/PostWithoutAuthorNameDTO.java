@@ -1,6 +1,5 @@
 package com.empresajr.fatec.dto.post.response;
 
-import com.empresajr.fatec.dto.post.request.PostDTO;
 import com.empresajr.fatec.entities.Author;
 import com.empresajr.fatec.entities.Post;
 import com.empresajr.fatec.entities.Topic;

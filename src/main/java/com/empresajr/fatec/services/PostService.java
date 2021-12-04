@@ -67,7 +67,7 @@ public class PostService {
     @Transactional
     public PostWithoutAuthorNameDTO update(Long id, PostDTO dto) {
         try {
-            Post entity = repository.getOne(id);
+            Post entity = repository.getById(id);
             copyToDto(dto, entity);
             entity = repository.save(entity);
             return new PostWithoutAuthorNameDTO(entity, entity.getTopic(), entity.getAuthor());
@@ -91,13 +91,13 @@ public class PostService {
         entity.setContent(dto.getContent());
         entity.setImgUrl(dto.getImgUrl());
 
-        Topic topic = topicRepository.getOne(dto.getTopic_id());
+        Topic topic = topicRepository.getById(dto.getTopic_id());
         entity.setTopic(topic);
 
     }
 
     private void insertAuthorToDto(PostDTO dto, Post entity){
-        Author author = authorRepository.getOne(dto.getAuthor_id());
+        Author author = authorRepository.getById(dto.getAuthor_id());
         entity.setAuthor(author);
     }
 }

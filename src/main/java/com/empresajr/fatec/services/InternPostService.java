@@ -64,7 +64,7 @@ public class InternPostService {
     @Transactional
     public InternPostWithoutAuthorNameDTO update(Long id, InternPostDTO dto) {
         try {
-            InternPost entity = repository.getOne(id);
+            InternPost entity = repository.getById(id);
             copyToDto(dto, entity);
             entity = repository.save(entity);
             return new InternPostWithoutAuthorNameDTO(entity, entity.getInternTopic(), entity.getAuthor());
@@ -88,12 +88,12 @@ public class InternPostService {
         entity.setDescription(dto.getDescription());
         entity.setImgUrl(dto.getImgUrl());
 
-        InternTopic topic = internTopicRepository.getOne(dto.getInternTopic_id());
+        InternTopic topic = internTopicRepository.getById(dto.getInternTopic_id());
         entity.setInternTopic(topic);
     }
 
     private void insertAuthorToDto(InternPostDTO dto, InternPost entity){
-        Author author = authorRepository.getOne(dto.getAuthor_id());
+        Author author = authorRepository.getById(dto.getAuthor_id());
         entity.setAuthor(author);
     }
 }
