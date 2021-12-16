@@ -1,6 +1,7 @@
 package com.empresajr.fatec.services;
 
 import com.empresajr.fatec.dto.author.response.AuthorNameAndEmailDTO;
+import com.empresajr.fatec.dto.author.request.AuthorDTO;
 import com.empresajr.fatec.dto.internpost.response.InternPostWithoutAuthorNameDTO;
 import com.empresajr.fatec.dto.post.response.PostWithoutAuthorNameDTO;
 import com.empresajr.fatec.entities.Author;
@@ -44,9 +45,9 @@ public class AuthorService {
     }
 
     @Transactional(readOnly = true)
-    public List<AuthorNameAndEmailDTO> findAll(){
+    public List<AuthorDTO> findAll(){
         List<Author> list = repository.findAll();
-        return list.stream().map(x -> new AuthorNameAndEmailDTO(x, x.getPosts(), x.getInternPosts())).collect(Collectors.toList());
+        return list.stream().map(x -> new AuthorDTO(x, x.getPosts(), x.getInternPosts())).collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)

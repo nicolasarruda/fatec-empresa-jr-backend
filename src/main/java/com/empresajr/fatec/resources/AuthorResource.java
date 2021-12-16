@@ -26,8 +26,8 @@ public class AuthorResource {
     private TopicService topicService;
 
     @GetMapping
-    public ResponseEntity<List<AuthorNameAndEmailDTO>> findAll(){
-        List<AuthorNameAndEmailDTO> list = service.findAll();
+    public ResponseEntity<List<AuthorDTO>> findAll(){
+        List<AuthorDTO> list = service.findAll();
         return ResponseEntity.ok().body(list);
     }
 
